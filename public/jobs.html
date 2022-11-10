@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1> Area 57 Construction</h1>
+    <div id="navBar">
+        <a href="./jobs.html">Jobs</a> |
+        <a href="./tasks.html">Tasks</a> |
+        <a href="./contractors.html">Contractors</a> |
+        <a href="./trades.html">Trade</a> |
+        <a href="./contractorsTrades.html">Contractors Trades</a>
+
+    </div>
+    <h2>Jobs: captures active jobsite locations, description, timeline and budget. </h2>
+    <div id="table">
+        <table>
+            <thead>
+                <th></th>
+                <th>jobID</th>
+                <th>Job Address</th>
+                <th>Job zip</th>
+                <th>Job Description</th>
+                <th class="date">Job Start</th>
+                <th class="date">Job Completed</th>
+                <th>Job Cost</th>
+                <th>Job Budget</th>
+                <th></th>
+            </thead>
+            <tr>
+                <td><a href="#" onClick="updateJob()">Edit</a></td>
+                <td>1</td>
+                <td>3000 SE Newton St, North Bend, WA</td>
+                <td class="rightA">98045</td>
+                <td>5 acre lot with 3200 square foot house. Sloped lot designated R5. Power at the street (transformer
+                    required). Will require septic and connection to PUD water.</td>
+                <td>2021-10-21</td>
+                <td>2022-07-28</td>
+                <td class="rightA">$567,527</td>
+                <td class="rightA">$560,000</td>
+                <td><a href="#" onClick="deleteJob()">Delete</a></td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateJob()">Edit</a></td>
+                <td>2</td>
+                <td>11525 SE Croston Ln, Issaquah, WA</td>
+                <td class="rightA">98029</td>
+                <td>.12 acre lot with 2400 SF home flat lot with drainage issues. Zoned R</td>
+                <td>2021-10-22</td>
+                <td>2022-09-15</td>
+                <td class="rightA">$435,025</td>
+                <td class="rightA">$450,000</td>
+                <td><a href="#" onClick="deleteJob()">Delete</a></td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateJob()">Edit</a></td>
+                <td>3</td>
+                <td>11529 SE Croston Ln, Issaquah, WA</td>
+                <td class="rightA">98029</td>
+                <td>.12 acre lot with 2700 SF home flat lot with drainage issues. Zoned R3</td>
+                <td>2021-10-22</td>
+                <td></td>
+                <td class="rightA">$465,387</td>
+                <td class="rightA">$480,000</td>
+                <td><a href="#" onClick="deleteJob()">Delete</a></td>
+            <tr>
+                <td><a href="#" onClick="updateJob()">Edit</a></td>
+                <td>4</td>
+                <td>9592 Shore Avenue Bellevue, WA</td>
+                <td class="rightA">08753</td>
+                <td>.1 acre lot with 1700 SF home flat lot wooded lot. Connection to city water and sewer.</td>
+                <td>2023-01-14</td>
+                <td></td>
+                <td class="rightA">$602,487</td>
+                <td class="rightA">$625,000</td>
+                <td><a href="#" onClick="deleteJob()">Delete</a></td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateJob()">Edit</a></td>
+                <td>5</td>
+                <td>9959 West Longfellow St., Federal Way, WA</td>
+                <td class="rightA">92347</td>
+                <td>.2 acre lot with 2300 SF home flat wooded lot with connection to city water and sewer.</td>
+                <td>2020-08-02</td>
+                <td></td>
+                <td class="rightA">$472,114</td>
+                <td class="rightA">$500,000</td>
+                <td><a href="#" onClick="deleteJob()">Delete</a></td>
+            </tr>
+        </table>
+        <br>
+        <button onClick="showAddNew()">Add New</button><br><br>
+    </div>
+
+    <!-- Insert Method-->
+    <div id="insert">
+        <form method="POST" id="addNewJob">
+            <legend> Add New Job </legend>
+            <fieldset class="fields">
+                <label for="address">Address: </label><input type="text" id="address" size="100">
+                <label for="zipCode">Zip Code: </label><input type="number" id="zipCode"><br>
+                <label type="description">Description: </label><input type="text" id="description" size="150"><br>
+                <label type="starDate">Start Date: </label><input type="date" id="starDate">
+                <label type="endDate">End Date: </label><input type="date" id="endDate"><br>
+                <label type="jobCost">Job Cost: </label><input type="text" id="jobCost">
+                <label type="jobBudget">Job Budget: </label><input type="text" id="jobBudget"><br>
+            </fieldset>
+            <button class=btn type="submit" id="addJob" onClick=showTable()>Add New</button>
+            <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Update Method-->
+    <div id="update">
+        <form method="UPDATE" id="updatejob">
+            <legend> Update Job </legend>
+            <fieldset>
+                <label for="address">Address: </label><input type="text" id="address"
+                    value="9959 West Longfellow St., Federal Way, WA" size="100">
+                <label for="zipCode">Zip Code: </label><input type="number" id="zipCode" value="92347"><br>
+                <label type="description">Description: </label><input type="text" id="description" size="150"
+                    value=".2 acre lot with 2300 SF home flat wooded lot with connection to city water and sewer."><br>
+                <label type="starDate">Start Date: </label><input type="date" id="starDate" value="2020-08-02">
+                <label type="endDate">End Date: </label><input type="date" id="endDate"><br>
+                <label type="jobCost">Job Cost: </label><input type="text" id="jobCost" value="$472,114">
+                <label type="jobBudget">Job Budget: </label><input type="text" id="jobBudget" value="$500,000"><br>
+            </fieldset>
+            <button class=btn type="update" id="updateJob" onClick=showTable()>Update</button>
+            <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Delete Method-->
+    <div id="delete">
+        <form method="DELETE" id="deleteJob">
+            <legend>Delete Job</legend>
+            <fieldset>
+                <label>Are you sure you would like to remove this job?</label>
+            </fieldset>
+            <button class=btn type="delete" id="deleteJob" onClick=showTable()>Yes Delete</button>
+            <button class=btn type="button" value="cancel" onClick=showTable()>Cancel</button>
+        </form>
+    </div>
+
+    <script>
+        function showTable() {
+            document.getElementById("table").style.display = "block";
+            document.getElementById("addNewJob").style.display = "none";
+            document.getElementById("updatejob").style.display = "none";
+            document.getElementById("deleteJob").style.display = "none";
+        }
+        function showAddNew() {
+            document.getElementById("table").style.display = "block";
+            document.getElementById("addNewJob").style.display = "block";
+            document.getElementById("updatejob").style.display = "none";
+            document.getElementById("deleteJob").style.display = "none";
+        }
+        function updateJob() {
+            document.getElementById("table").style.display = "block";
+            document.getElementById("addNewJob").style.display = "none";
+            document.getElementById("updatejob").style.display = "block";
+            document.getElementById("deleteJob").style.diplay = "none";
+        }
+        function deleteJob() {
+            document.getElementById("table").style.display = "block";
+            document.getElementById("addNewJob").style.display = "none";
+            document.getElementById("updatejob").style.display = "none";
+            document.getElementById("deleteJob").style.display = "block";
+        }
+        //default show table on load
+        showTable()
+    </script>
+</body>
+
+</html>

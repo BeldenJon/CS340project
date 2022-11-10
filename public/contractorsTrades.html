@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1> Area 57 Construction</h1>
+    <div id="navBar">
+        <a href="./jobs.html">Jobs</a> |
+        <a href="./tasks.html">Tasks</a> |
+        <a href="./contractors.html">Contractors</a> |
+        <a href="./trades.html">Trade</a> |
+        <a href="./contractorsTrades.html">Contractors Trades</a>
+
+    </div>
+    <h2>ContractorsTrades: Intersection table for Contractors and Trades relationship that serves dual
+        purpose of linking both with Tasks entity. This table also serves as an area to keep notes on contractors past
+        performance</h2>
+    <div id="table">
+        <p> Search <input type="text" id="search" placeholder="Search..."> <button type="submit">Submit</button> </p>
+        <table>
+            <thead>
+                <th></th>
+                <th>Trade Name</th>
+                <th>Contractor Name</th>
+                <th>Contractor Trade Notes</th>
+                <th>Active Trade</th>
+            </thead>
+            <tr>
+                <td><a href="#" onClick="updateContractorTrade()">Edit</a></td>
+                <td>Project Manager</td>
+                <td>Area 57 Construction</td>
+                <td></td>
+                <td>yes</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateContractorTrade()">Edit</a></td>
+                <td>Engineer</td>
+                <td>Bill Bob's Septic</td>
+                <td>Contractor is aggressive in pushing for lower cost septic systems. They have a good knowledge of the
+                    current climate at the county in approving gravity systems. Designs might cost a little more but
+                    likely make it up on construction costs on systems with curtain drains.</td>
+                <td>yes</td>
+            <tr>
+                <td><a href="#" onClick="updateContractorTrade()">Edit</a></td>
+                <td>Architect</td>
+                <td>M&D Architects</td>
+                <td>7/23/21 - Received several compliments on the finished architectural design of the home in North
+                    Bend. House sold</td>
+                <td>yes</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateContractorTrade()">Edit</a></td>
+                <td>Engineer</td>
+                <td>Olson Engineering</td>
+                <td>1/1/21 - Prices for civil engineering services increase from $0.60/ft^2 to $0.75/ft^2</td>
+                <td>yes</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateContractorTrade()">Edit</a></td>
+                <td>Architect</td>
+                <td>Olson Engineering</td>
+                <td>Have a couple drafters that are able to perform simple architectural services. Not recommended for
+                    high end complex homes.</td>
+                <td>no</td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateContractorTrade()">Edit</a></td>
+                <td>Inspector</td>
+                <td>King County Department of Construction</td>
+                <td>3/1/21 - with Covid, wait time for construction inspections is 2 weeks out. Inspections for
+                    environment issues is 2 months out.</td>
+                <td>yes</td>
+            </tr>
+        </table>
+        <br>
+        <button onClick="showAddNew()">Add New</button><br><br>
+    </div>
+
+    <!-- Insert Method-->
+    <div id="insert">
+        <form method="POST" id="addNewContractorTrade">
+            <legend> Add New Contractor Trade </legend>
+            <fieldset class="fields">
+                <label for="Contractor">Contractor: </label>
+                <select id="Contractor">
+                    <option value="ContractorID1">Area 57 Construction</option>
+                    <option value="ContractorID2">Bill Bob's Septic</option>
+                    <option value="ContractorID3">M&D Architects</option>
+                    <option value="ContractorID4">Olson Engineering</option>
+                    <option value="ContractorID5">King County Department of Construction</option>
+                </select>
+                <label for="Trade">Trade: </label>
+                <select id="Trade">
+                    <option value="TradeID1">Project Manager</option>
+                    <option value="TradeID2">Architect</option>
+                    <option value="TradeID3">Engineer</option>
+                    <option value="TradeID4">Inspector</option>
+                    <option value="tradeID5">Dirtwork</option>
+                </select><br>
+                <label for="ContractorTradeNotes">Contractor Trade Notes: </label><input type="text"
+                    id="ContractorTradeNotes" size="150"><br>
+                <label for="ActiveTrade">Active Trade: </label><input type="checkbox" id="ActiveTrade"
+                    class="largeCheckbox"><br>
+            </fieldset>
+            <button class=btn type="submit" id="addContractorTrade" onClick=showTable()>Add New</button>
+            <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Update Method-->
+    <div id="update">
+        <form method="UPDATE" id="updateContractorTrade">
+            <legend> Update Contractor Trade</legend>
+            <fieldset class="fields">
+                <label for="Contractor">Contractor: </label>
+                <label>Olson Engineering </label>
+                <label for="Trade" style="padding-left:5em">Trade: </label>
+                <label>Architect</label>
+                <br>
+                <label for="ContractorTradeNotes">Contractor Trade Notes: </label><input type="text"
+                    id="ContractorTradeNotes" size="150"
+                    value="Have a couple drafters that are able to perform simple architectural services. Not recommended for high end complex homes."><br>
+                <label for="ActiveTrade">Active Trade: </label><input type="checkbox" id="ActiveTrade"
+                    class="largeCheckbox"><br>
+            </fieldset>
+            <button class=btn type="update" id="updateContractor" onClick=showTable()>Update</button>
+            <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+        </form>
+    </div>
+
+    <script>
+        function showTable() {
+            document.getElementById("table").style.display = "block";
+            document.getElementById("addNewContractorTrade").style.display = "none";
+            document.getElementById("updateContractorTrade").style.display = "none";
+            document.getElementById("deleteContractorTrade").style.display = "none";
+        }
+        function showAddNew() {
+            document.getElementById("table").style.display = "block";
+            document.getElementById("addNewContractorTrade").style.display = "block";
+            document.getElementById("updateContractorTrade").style.display = "none";
+            document.getElementById("deleteContractorTrade").style.display = "none";
+        }
+        function updateContractorTrade() {
+            document.getElementById("table").style.display = "block";
+            document.getElementById("addNewContractorTrade").style.display = "none";
+            document.getElementById("updateContractorTrade").style.display = "block";
+            document.getElementById("deleteContractorTrade").style.diplay = "none";
+        }
+        function deleteContractorTrade() {
+            document.getElementById("table").style.display = "block";
+            document.getElementById("addNewContractorTrade").style.display = "none";
+            document.getElementById("updateContractorTrade").style.display = "none";
+            document.getElementById("deleteContractorTrade").style.display = "block";
+        }
+        //default show table on load
+        showTable()
+    </script>
+</body>
+
+</html>

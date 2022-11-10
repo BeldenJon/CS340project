@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1> Area 57 Construction</h1>
+    <div id="navBar">
+        <a href="./jobs.html">Jobs</a> |
+        <a href="./tasks.html">Tasks</a> |
+        <a href="./contractors.html">Contractors</a> |
+        <a href="./trades.html">Trade</a> |
+        <a href="./contractorsTrades.html">Contractors Trades</a>
+
+    </div>
+    <h2>Tasks: tracks progression of each step of residential construction. Captures the
+        task order, description, start/end dates, who the task is assigned to, completion percent and billing details.
+    </h2>
+    <div id="table">
+        <table>
+            <thead>
+                <th></th>
+                <th>Job Site ID</th>
+                <th>Task Description</th>
+                <th>Task Sequence</th>
+                <th class="date">Task Start</th>
+                <th class="date">Task End</th>
+                <th>Contractor Trades ID</th>
+                <th>Task Percent Complete</th>
+                <th>Task Cost Estimate</th>
+                <th>Task Cost Billed</th>
+                <th class="date">Payment Due Date</th>
+                <th>Task Cost Paid</th>
+                <th></th>
+            </thead>
+            <tr>
+                <td><a href="#" onClick="updateTask()">Edit</a></td>
+                <td>1</td>
+                <td>Perform Lot Feasibility Study</td>
+                <td>1</td>
+                <td>2021-10-01</td>
+                <td>2021-12-01</td>
+                <td>1</td>
+                <td class="rightA">100</td>
+                <td class="rightA"></td>
+                <td class="rightA"></td>
+                <td></td>
+                <td></td>
+                <td><a href="#" onClick="deleteTask()">Delete</a></td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateTask()">Edit</a></td>
+                <td>1</td>
+                <td>Septic System Design</td>
+                <td>2</td>
+                <td>2021-10-15</td>
+                <td>2021-10-22</td>
+                <td>2</td>
+                <td class="rightA">100</td>
+                <td class="rightA">1500</td>
+                <td class="rightA">1000</td>
+                <td>2021-11-22</td>
+                <td class="rightA">1000</td>
+                <td><a href="#" onClick="deleteTask()">Delete</a></td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateTask()">Edit</a></td>
+                <td>1</td>
+                <td>Secure Project Funding (Loan)</td>
+                <td>3</td>
+                <td>2021-11-01</td>
+                <td>2021-11-15</td>
+                <td>1</td>
+                <td class="rightA">100</td>
+                <td class="rightA">4500</td>
+                <td class="rightA">4500</td>
+                <td>2021-11-15</td>
+                <td class="rightA">4500</td>
+                <td><a href="#" onClick="deleteTask()">Delete</a></td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateTask()">Edit</a></td>
+                <td>1</td>
+                <td>Finalize Purchase</td>
+                <td>4</td>
+                <td>2021-12-05</td>
+                <td>2021-12-05</td>
+                <td>1</td>
+                <td class="rightA">100</td>
+                <td class="rightA">135000</td>
+                <td class="rightA">125000</td>
+                <td>2021-12-05</td>
+                <td class="rightA">125000</td>
+                <td><a href="#" onClick="deleteTask()">Delete</a></td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateTask()">Edit</a></td>
+                <td>1</td>
+                <td>Construct Architectural Drawings</td>
+                <td>5</td>
+                <td>2021-12-15</td>
+                <td>2022-01-15</td>
+                <td>3</td>
+                <td class="rightA">100</td>
+                <td class="rightA">4500</td>
+                <td class="rightA">4200</td>
+                <td>2022-02-01</td>
+                <td class="rightA">4200</td>
+                <td><a href="#" onClick="deleteTask()">Delete</a></td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateTask()">Edit</a></td>
+                <td>1</td>
+                <td>Construct Engineering Drawings</td>
+                <td>6</td>
+                <td>2022-01-15</td>
+                <td>2022-01-25</td>
+                <td>4</td>
+                <td class="rightA">100</td>
+                <td class="rightA">2400</td>
+                <td class="rightA">2400</td>
+                <td>2022-02-25</td>
+                <td class="rightA">2400</td>
+                <td><a href="#" onClick="deleteTask()">Delete</a></td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateTask()">Edit</a></td>
+                <td>2</td>
+                <td>Perform Lot Feasibility Study</td>
+                <td>1</td>
+                <td>2021-10-22</td>
+                <td>2021-12-25</td>
+                <td>1</td>
+                <td class="rightA">100</td>
+                <td class="rightA"></td>
+                <td class="rightA"></td>
+                <td></td>
+                <td class="rightA"></td>
+                <td><a href="#" onClick="deleteTask()">Delete</a></td>
+            </tr>
+            <tr>
+                <td><a href="#" onClick="updateTask()">Edit</a></td>
+                <td>2</td>
+                <td>County Inspection for wetland concerns</td>
+                <td>2</td>
+                <td>2022-11-05</td>
+                <td>2022-11-05</td>
+                <td>6</td>
+                <td class="rightA">0</td>
+                <td class="rightA">450</td>
+                <td class="rightA"></td>
+                <td></td>
+                <td class="rightA"></td>
+                <td><a href="#" onClick="deleteTask()">Delete</a></td>
+            </tr>
+        </table>
+        <br>
+        <button onClick="showAddNew()">Add New</button><br><br>
+    </div>
+
+    <!-- Insert Method-->
+    <div id="insert">
+        <form method="POST" id="addNewTask">
+            <legend> Add New Task </legend>
+            <fieldset class="fields">
+                <label for="job Site">Job Site: </label>
+                <select id="Job Sites">
+                    <option value="JobSiteID1">3000 SE Newton St, North Bend, WA</option>
+                    <option value="JobSiteID2">11525 SE Croston Ln, Issaquah, WA</option>
+                    <option value="JobSiteID3">11529 SE Croston Ln, Issaquah, WA</option>
+                    <option value="JobSiteID4">9592 Shore Avenue Bellevue, WA</option>
+                    <option value="JobSiteID5">9959 West Longfellow St., Federal Way, WA</option>
+                </select><br>
+                <label for="taskDescription">Task Description: </label><input type="text" id="taskDescription"
+                    size="100"><br>
+                <label for="taskSequence">Task Sequence: </label><input type="number" id="Sequence" size="3"><br>
+                <label for="taskStart">Start Date: </label><input type="date" id="starDate">
+                <label for="taskEnd">End Date: </label><input type="date" id="endDate"><br>
+                <label for="ContractorTradesID">Contractor and Trades: </label><input type="number"
+                    id="ContractorTrades"><br>
+                <label for="TaskPercentCompleted">Percent Complete: </label><input type="number"
+                    id="TaskPercentCompleted"><br>
+                <label for="TaskCostEstimate">Cost Estimate: </label><input type="number" id="TaskCostEstimate"
+                    class="rightA">
+                <label for="TaskCostBilled">Cost Billed: </label><input type="number" id="TaskCostBilled"
+                    class="rightA"><br>
+                <label for="PaymentDueDate">Payment Due Date: </label><input type="date" id="PaymentDueDate">
+                <label for="TaskCostPaid">is Paid: </label><input type="checkbox" id="TaskCostPaid"
+                    class="largeCheckbox"><br>
+            </fieldset>
+            <button class=btn type="submit" id="addTask" onClick=showTable()>Add New</button>
+            <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Update Method-->
+    <div id="update">
+        <form method="UPDATE" id="updateTask">
+            <legend> Update Task </legend>
+            <fieldset class="fields">
+                <label for="job Site">Job Site: </label>
+                <select id="Job Sites">
+                    <option value="JobSiteID1">3000 SE Newton St, North Bend, WA</option>
+                    <option value="JobSiteID2">11525 SE Croston Ln, Issaquah, WA</option>
+                    <option value="JobSiteID3">11529 SE Croston Ln, Issaquah, WA</option>
+                    <option value="JobSiteID4">9592 Shore Avenue Bellevue, WA</option>
+                    <option value="JobSiteID5">9959 West Longfellow St., Federal Way, WA</option>
+                </select><br>
+                <label for="taskDescription">Task Description: </label><input type="text" id="taskDescription"
+                    value="Perform Lot Feasibility Study" size="100"><br>
+                <label for="taskSequence">Task Sequence: </label><input type="number" id="Sequence" size="3"
+                    value=1><br>
+                <label for="taskStart">Start Date: </label><input type="date" id="starDate" value="2021-10-01">
+                <label for="taskEnd">End Date: </label><input type="date" id="endDate" value="2021-12-01"><br>
+                <label for="ContractorTradesID">Contractor and Trades: </label><input type="number"
+                    id="ContractorTrades" value="1"><br>
+                <label for="TaskPercentCompleted">Percent Complete: </label><input type="number"
+                    id="TaskPercentCompleted" value="100"><br>
+                <label for="TaskCostEstimate">Cost Estimate: </label><input type="number" id="TaskCostEstimate"
+                    class="rightA">
+                <label for="TaskCostBilled">Cost Billed: </label><input type="number" id="TaskCostBilled"
+                    class="rightA"><br>
+                <label for="PaymentDueDate">Payment Due Date: </label><input type="date" id="PaymentDueDate">
+                <label for="TaskCostPaid">Is Paid: </label><input type="checkbox" id="TaskCostPaid"
+                    class="largeCheckbox"><br>
+            </fieldset>
+            <button class=btn type="submit" id="addTask" onClick=showTable()>Update</button>
+            <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+        </form>
+    </div>
+
+    <!-- Delete Method-->
+    <div id="delete">
+        <form method="DELETE" id="deleteTask">
+            <legend>Delete Task</legend>
+            <fieldset>
+                <label>Are you sure you would like to remove this Task?</label>
+            </fieldset>
+            <button class=btn type="delete" id="deleteTask" onClick=showTable()>Yes Delete</button>
+            <button class=btn type="button" value="cancel" onClick=showTable()>Cancel</button>
+        </form>
+    </div>
+
+    <script>
+        function showTable() {
+            document.getElementById("table").style.display = "block";
+            document.getElementById("addNewTask").style.display = "none";
+            document.getElementById("updateTask").style.display = "none";
+            document.getElementById("deleteTask").style.display = "none";
+        }
+        function showAddNew() {
+            document.getElementById("table").style.display = "block";
+            document.getElementById("addNewTask").style.display = "block";
+            document.getElementById("updateTask").style.display = "none";
+            document.getElementById("deleteTask").style.display = "none";
+        }
+        function updateTask() {
+            document.getElementById("table").style.display = "block";
+            document.getElementById("addNewTask").style.display = "none";
+            document.getElementById("updateTask").style.display = "block";
+            document.getElementById("deleteTask").style.diplay = "none";
+        }
+        function deleteTask() {
+            document.getElementById("table").style.display = "block";
+            document.getElementById("addNewTask").style.display = "none";
+            document.getElementById("updateTask").style.display = "none";
+            document.getElementById("deleteTask").style.display = "block";
+        }
+        //default show table on load
+        showTable()
+    </script>
+</body>
+
+</html>
