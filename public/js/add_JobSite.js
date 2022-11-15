@@ -1,3 +1,10 @@
+function showAddNew() {
+    document.getElementById("JobSite-table").style.display = "block";
+    document.getElementById("add-JobSite-form-ajax").style.display = "block";
+    document.getElementById("update-JobSite-form-ajax").style.display = "none";
+    document.getElementById("delete-JobSite-ajax").style.display = "none";
+}
+
 // Get the objects we need to modify
 let addJobSiteForm = document.getElementById('add-JobSite-form-ajax');
 
@@ -80,8 +87,9 @@ addRowToTable = (data) => {
     let parsedData = JSON.parse(data);
     let newRow = parsedData[parsedData.length - 1]
 
-    // Create a row and 4 cells
+    // Create a row and 10 cells
     let row = document.createElement("TR");
+    let editCell = document.createElement("TD");
     let idCell = document.createElement("TD");
     let addressCell = document.createElement("TD");
     let zipcodeCell = document.createElement("TD");
@@ -90,8 +98,17 @@ addRowToTable = (data) => {
     let endDateCell = document.createElement("TD");
     let jobCostCell = document.createElement("TD");
     let jobBudgetCell = document.createElement("TD");
+    let deleteCell = document.createElement("TD");
 
     // Fill the cells with correct data
+    editCell = document.createElement('a');
+    editCell.setAttribute('href', "#");
+    editCell.innerHTML = "Edit";
+    /*
+    editCell.onclick = function () {
+        deleteJobSite(newRow.JobSiteID);
+    }
+    */
     idCell.innerText = newRow.JobSiteID;
     addressCell.innerText = newRow.JobAddress;
     zipcodeCell.innerText = newRow.JobZipcode;
@@ -100,8 +117,15 @@ addRowToTable = (data) => {
     endDateCell.innerText = newRow.JobCompleted;
     jobCostCell.innerText = newRow.JobCost;
     jobBudgetCell.innerText = newRow.JobBudget;
+    deleteCell = document.createElement("a");
+    deleteCell.setAttribute('href', "#");
+    deleteCell.innerHTML = "Delete";
+    deleteCell.onclick = function () {
+        deleteJobSite(newRow.JobSiteID);
+    };
 
     // Add the cells to the row 
+    row.appendChild(editCell);
     row.appendChild(idCell);
     row.appendChild(addressCell);
     row.appendChild(zipcodeCell);
@@ -110,6 +134,10 @@ addRowToTable = (data) => {
     row.appendChild(endDateCell);
     row.appendChild(jobCostCell);
     row.appendChild(jobBudgetCell);
+    row.appendChild(deleteCell);
+
+    // Add a row attribute so the deleteRow function can find a newly added row
+    row.setAttribute('job-value', newRow.JobSiteID);
 
     // Add the row to the table
     currentTable.appendChild(row);
