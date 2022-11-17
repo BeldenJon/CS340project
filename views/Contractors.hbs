@@ -1,0 +1,140 @@
+{{!-- Just some plain text --}}
+    <h1> Area 57 Construction</h1>
+    <div id="navBar">
+        <a href="./JobSites">Jobs</a> |
+        <a href="./Tasks">Tasks</a> |
+        <a href="./Contractors">Contractors</a> |
+        <a href="./Trades">Trade</a> |
+        <a href="./ContractorsTrades">Contractors Trades</a>
+    </div>
+    <h2>Contractors: records license number and contact information for active contractors Area 57
+        construction has worked with (or has considered working with).</h2>
+
+
+{{!--jquery for delete operation--}}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- The Data from our Database --}}
+
+{{!-- Create a table --}}
+<table id="Contractor-table">
+    <thead>
+        <tr>
+            <th></th>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr contractor-value={{this.ContractorID}}>
+            <td><a href="#" onClick="updateContractor({{this.ContractorID}})">Edit</a></td>
+            <td>{{this.ContractorID}}
+            <td class="rightA">{{this.LicenseNumber}}</td>
+            <td>{{this.FirstName}}</td>
+            <td>{{this.LastName}}</td>
+            <td>{{this.BusinessName}}</td>
+            <td>{{this.ContactPhone}}</td>
+            <td>{{this.ContactEmail}}</td>
+            <td><a href="#" onClick="deleteContractorAjax({{this.ContractorID}})">Delete</a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<br>
+<button onClick="showAddNew()">Add New</button><br><br>
+
+
+{{!-- Form to add a record to the table using AJAX --}}
+<form id="add-Contractor-form-ajax">
+    <legend> Add New Contractor </legend>
+    <fieldset class="fields">
+        <label for="input-License">Business License: </label>
+        <input type="text" name="input-License" id="input-License">
+
+        <label for="input-firstName">POC First Name: </label>
+        <input type="text" name="input-firstName" id="input-firstName">
+
+        <label for="input-lastName">POC Last Name: </label>
+        <input type="text" name="input-lastName" id="input-lastName"><br>
+
+        <label for="input-businessName">Business Name: </label>
+        <input type="text" name="input-businessName" id="input-businessName" size="150"><br>
+
+        <label for="input-contactPhone">Phone Number: </label>
+        <input type="tel" name="input-contactPhone" id="input-contactPhone">
+
+        <label for="input-contactEmail">Email: </label>
+        <input type="text" name="input-contactEmail" id="input-contactEmail" size="50"><br>
+    </fieldset>
+    <button class=btn type="submit" id="addContactor" onClick="showTable()">Add New</button>
+    <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+</form>
+
+{{!-- Form to update a record to the table using AJAX --}}
+<form id="update-Contractor-form-ajax">
+    <legend> Update Contractor </legend>
+    <fieldset>
+        <label for="pass-ContractorID">ContractorID (readonly): </label>
+        <input type="number" name="pass-ContractorID" id="pass-ContractorID" value="" readonly>
+
+        <label for="update-License">Business License: </label>
+        <input type="text" name="update-License" id="update-License" value="">
+
+        <label for="update-firstName">POC First Name: </label>
+        <input type="text" name="update-firstName" id="update-firstName" value="">
+
+        <label for="update-lastName">POC Last Name: </label>
+        <input type="text" name="update-lastName" id="update-lastName" value=""><br>
+
+        <label for="update-businessName">Business Name: </label>
+        <input type="text" name="update-businessName" id="update-businessName" size="150" value=""><br>
+
+        <label for="update-contactPhone">Phone Number: </label>
+        <input type="tel" name="update-contactPhone" id="update-contactPhone" value="">
+
+        <label for="update-contactEmail">Email: </label>
+        <input type="text" name="update-contactEmail" id="update-contactEmail" size="50"><br>
+
+    </fieldset>
+    <button class=btn type="submit" id="updateContractor" onClick="showTable()">Update</button>
+    <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+</form>
+
+
+{{!-- Form to delete a record to the table using AJAX --}}
+<form method="DELETE" id="delete-Contractor-ajax">
+    <legend>Delete Contractor</legend>
+    <fieldset>
+        <label>Are you sure you want to delete Contractor XX?</label>
+    </fieldset>
+    <button class=btn type="delete" id="deleteContractor" onClick="deleteContractor()">Yes Delete</button>
+    <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+</form>
+
+
+{{!--Set views--}}
+    <script>
+        function showTable() {
+            document.getElementById("Contractor-table").style.display = "block";
+            document.getElementById("add-Contractor-form-ajax").style.display = "none";
+            document.getElementById("update-Contractor-form-ajax").style.display = "none";
+            document.getElementById("delete-Contractor-ajax").style.display = "none";
+        }
+        //default show table on load
+        showTable()
+    </script>
+
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_contractor.js"></script>
+<script src="./js/update_contractor.js"></script>
+<script src="./js/delete_contractor.js"></script>

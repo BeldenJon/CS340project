@@ -7,8 +7,8 @@
         <a href="./Trades">Trade</a> |
         <a href="./ContractorsTrades">Contractors Trades</a>
     </div>
-    <br>
-
+    <h2>Tasks: tracks progression of each step of residential construction. Captures the
+        task order, description, start/end dates, who the task is assigned to, completion percent and billing details.</h2>
 
 {{!--jquery for delete operation--}}
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -35,15 +35,20 @@
         {{#each data}}
         <tr task-value={{this.TaskID}}>
             <td><a href="#" onClick="updateTask({{this.TaskID}})">Edit</a></td>
+            <td>{{this.TaskID}}
             <td>{{this.JobSiteID}}</td>
-            <td>{{this.JobAddress}}</td>
-            <td class="rightA">{{this.JobZipcode}}</td>
-            <td>{{this.JobDescription}}</td>
-            <td>{{this.JobStart}}</td>
-            <td>{{this.JobCompleted}}</td>
-            <td class="rightA">{{this.JobCost}}</td>
-            <td class="rightA">{{this.JobBudget}}</td>
-            <td><a href="#" onClick="deleteTask({{this.TaskID}})">Delete</a></td>
+            <td>{{this.Description}}</td>
+            <td class="rightA">{{this.TaskSeq}}</td>
+            <td>{{this.Start_Date}}</td>
+            <td>{{this.End_Date}}</td>
+            <td>{{this.ContractorTradeID}}</td>
+            <td contr-trade={{this.ContractorTradeID}}>{{this.ContTrade}}</td>
+            <td class="rightA">{{this.PercentComplete}}</td>
+            <td class="rightA">{{this.CostEstimate}}</td>
+            <td class="rightA">{{this.CostBilled}}</td>
+            <td class="rightA">{{this.Due_Date}}</td>
+            <td>{{this.Paid}}</td>
+            <td><a href="#" onClick="deleteTaskAjax({{this.TaskID}})">Delete</a></td>
         </tr>
         {{/each}}
     </tbody>
@@ -57,14 +62,19 @@
 <form id="add-Task-form-ajax">
     <legend> Add New Task </legend>
     <fieldset class="fields">
-        <label for="input-address">Address: </label>
-        <input type="text" name="input-address" id="input-address" size="100">
+        <label for="input-JobSite">Job Site: </label>
+        <select name="input-JobSite" id="input-JobSite">
+            <option value="">Select a Job Site:</option>
+            {{#each jobs}}
+                <option value="{{this.JobSiteID}}">{{this.JobAddress}}</option>
+            {{/each}}
+        </select><br>
 
-        <label for="input-zipCode">Zip Code: </label>
-        <input type="number" name="input-zipCode" id="input-zipCode"><br>
+        <label for="input-description">Task Description: </label>
+        <input type="text" name="input-description" id="input-description" size="120"><br>
 
-        <label for="input-description">Description: </label>
-        <input type="text" name="input-description" id="input-description" size="150"><br>
+        <label for="input-sequence">Task Sequence: </label>
+        <input type="number" name="input-sequence" id="input-sequence">
 
         <label for="input-startDate">Start Date: </label>
         <input type="date" name="input-startDate" id="input-startDate">
@@ -72,47 +82,87 @@
         <label for="input-endDate">End Date: </label>
         <input type="date" name="input-endDate" id="input-endDate"><br>
 
-        <label for="input-jobCost">Job Cost: </label>
-        <input type="text" name="input-jobCost" id="input-jobCost">
+        <label for="input-contTrade">Contractor and Trade: </label>
+        <select name="input-contTrade" id="input-contTrade">
+            <option value="">Select a Contractor and Trade:</option>
+            {{#each contrTrades}}
+                <option value="{{this.ContractorTradeID}}">{{this.ContTrade}}</option>
+            {{/each}}
+        </select>
 
-        <label for="input-jobBudget">Job Budget: </label>
-        <input type="text" name="input-jobBudget" id="input-jobBudget"><br>
+        <label for="input-percent">Percent Complete: </label>
+        <input type="number" name="input-percent" id="input-percent"><br>
+        
+        <label for="input-Estimate">Task Estimate: </label>
+        <input type="text" name="input-Estimate" id="input-Estimate">
 
-        <button class=btn type="submit" id="addJob" onClick="showTable()">Add New</button>
+        <label for="input-Billed">Task Billed: </label>
+        <input type="text" name="input-Billed" id="input-Billed"><br>
+
+        <label for="input-paymentDate">Payment Due Date: </label>
+        <input type="date" name="input-paymentDate" id="input-paymentDate">
+
+        <label for="input-paid">is Paid: </label>
+        <input type="checkbox" name="input-paid" id="input-paid" class="largeCheckbox"><br>                
+
+        <button class=btn type="submit" id="addTask" onClick="showTable()">Add New</button>
         <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
     </fieldset>
 </form>
 
 {{!-- Form to update a record to the table using AJAX --}}
-<form id="update-JobSite-form-ajax">
-    <legend> Update Job </legend>
+<form id="update-Task-form-ajax">
+    <legend> Update Task </legend>
     <fieldset>
-            <label for="pass-JobSiteID">JobSiteID (readonly): </label>
-            <input type="number" name="pass-JobSiteID" id="pass-JobSiteID" value="" readonly>
+        <label for="pass-TaskID">TaskID (readonly): </label>
+        <input type="number" name="pass-TaskID" id="pass-TaskID" value="" readonly>
 
-            <label for="update-address">Address: </label>
-            <input type="text" name="update-address" id="update-address" value="9959 West Longfellow St., Federal Way, WA" size="100">
+        <label for="update-JobSite">Job Site: </label>
+        <select name="update-JobSite" id="update-JobSite">
+            <option value="">Select a Job Site:</option>
+            {{#each jobs}}
+                <option value="{{this.JobSiteID}}">{{this.JobAddress}}</option>
+            {{/each}}
+        </select><br>
 
-            <label for="update-zipCode">Zip Code: </label>
-            <input type="number" name="update-zipCode" id="update-zipCode" value="92347">
+        <label for="update-description">Task Description: </label>
+        <input type="text" name="update-description" id="update-description" size="120"><br>
 
-            <label for="update-description">Description: </label>
-            <input type="text" name="update-description" id="update-description" size="150" value=".2 acre lot with 2300 SF home flat wooded lot with connection to city water and sewer."><br>
+        <label for="update-sequence">Task Sequence: </label>
+        <input type="number" name="update-sequence" id="update-sequence">
 
-            <label for="update-startDate">Start Date: </label>
-            <input type="date" name="update-startDate" id="update-startDate" value="2020-08-02">
+        <label for="update-startDate">Start Date: </label>
+        <input type="date" name="update-startDate" id="update-startDate">
 
-            <label for="update-endDate">End Date: </label>
-            <input type="date" name="update-endDate" id="update-endDate" value="2020-08-04"><br>
+        <label for="update-endDate">End Date: </label>
+        <input type="date" name="update-endDate" id="update-endDate"><br>
 
-            <label for="update-jobCost">Job Cost: </label>
-            <input type="text" name="update-jobCost" id="update-jobCost" value="472114">
+        <label for="update-contTrade">Contractor and Trade: </label>
+        <select name="update-contTrade" id="update-contTrade">
+            <option value="">Select a Contractor and Trade:</option>
+            {{#each contrTrades}}
+                <option value="{{this.ContractorTradeID}}">{{this.ContTrade}}</option>
+            {{/each}}
+        </select>
 
-            <label type="update-jobBudget">Job Budget: </label>
-            <input type="text" name="update-jobBudget" id="update-jobBudget" value="500000"><br>
+        <label for="update-percent">Percent Complete: </label>
+        <input type="number" name="update-percent" id="update-percent"><br>
+        
+        <label for="update-Estimate">Task Estimate: </label>
+        <input type="text" name="update-Estimate" id="update-Estimate">
+
+        <label for="update-Billed">Task Billed: </label>
+        <input type="text" name="update-Billed" id="update-Billed"><br>
+
+        <label for="update-paymentDate">Payment Due Date: </label>
+        <input type="date" name="update-paymentDate" id="update-paymentDate">
+
+        <label for="update-paid">is Paid: </label>
+        <input type="checkbox" name="update-paid" id="update-paid" class="largeCheckbox"><br>
+
+        <button class=btn type="submit" id="updatejob" onClick="showTable()">Update</button>
+        <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
     </fieldset>
-    <button class=btn type="submit" id="updatejob" onClick="showTable()">Update</button>
-    <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
 </form>
 
 
