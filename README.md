@@ -1,4 +1,4 @@
-# CS340project
+# CS340 project - Introduction to Databases
 
 ## Problem Statement:
 
