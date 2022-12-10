@@ -38,7 +38,13 @@ addTaskForm.addEventListener("submit", function (e) {
     let estimate = input_estimate.value;
     let billed = input_billed.value;
     let dayPaid = input_dayPaid.value;
-    let paid = input_paid.value;
+    let paid = input_paid.checked == true ? 1 : 0;
+
+    // Validate inputs
+    if (start > end) {
+        alert("The 'End Date' must be the the same day or after the 'Start date'.")
+        return
+    }
 
     // Put our data we want to send in a javascript object
     let data = {
@@ -78,7 +84,7 @@ addTaskForm.addEventListener("submit", function (e) {
             input_estimate.value = "";
             input_billed.value = "";
             input_dayPaid.value = "";
-            input_paid.value = "0";
+            input_paid.checked = false;
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
@@ -93,10 +99,7 @@ addTaskForm.addEventListener("submit", function (e) {
 // Creates a single row from an Object representing a single record from JobSites
 addRowToTable = (data) => {
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("Task-table");
-
-    // Get the location where we should insert the new row (end of table)
-    let newRowIndex = currentTable.rows.length;
+    let currentTableBody = document.getElementById("Task-table-body");
 
     // Get a reference to the new row from the database query (last object)
     let parsedData = JSON.parse(data);
@@ -106,7 +109,7 @@ addRowToTable = (data) => {
     let row = document.createElement("TR");
     let editCell = document.createElement("TD");
     let taskIDCell = document.createElement("TD");
-    let jobSiteIDCell = document.createElement("TD");
+    let jobAddressCell = document.createElement("TD");
     let descriptionCell = document.createElement("TD");
     let seqCell = document.createElement("TD");
     let startCell = document.createElement("TD");
@@ -121,40 +124,39 @@ addRowToTable = (data) => {
     let deleteCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    editCell = document.createElement('a');
-    editCell.setAttribute('href', "#");
-    editCell.innerHTML = "Edit";
-    /*
-    editCell.onclick = function () {
-        updateTask(newRow.TaskID);
-    }
-    */
+    editCell.innerHTML = `<a href="#" onClick="updateTask(${newRow.TaskID})">Edit</a>`
     taskIDCell.innerText = newRow.TaskID;
-    jobSiteIDCell.innerText = newRow.JobSiteID;
+    jobAddressCell.innerText = newRow.JobAddress;
+    jobAddressCell.setAttribute("job-ID", newRow.JobSiteID);
     descriptionCell.innerText = newRow.Description;
     seqCell.innerText = newRow.TaskSeq;
+    seqCell.setAttribute('class', 'rightA');
     startCell.innerText = newRow.Start_Date;
+    startCell.setAttribute('class', 'date');
     endCell.innerText = newRow.End_Date;
+    endCell.setAttribute('class', 'date');
     ContTradeIDCell.innerText = newRow.ContractorTradeID;
     contTradeCell.innerText = newRow.ContTrade;
     percentCell.innerText = newRow.PercentComplete;
+    percentCell.setAttribute('class', 'rightA');
     estimateCell.innerText = newRow.CostEstimate;
+    estimateCell.setAttribute('class', 'rightA');
     billedCell.innerText = newRow.CostBilled;
-    dueDateCell.innerText = newRow.Due_Date;
-    paidCell.innerText = newRow.Paid
-    deleteCell = document.createElement("a");
-    deleteCell.setAttribute('href', "#");
-    deleteCell.innerHTML = "Delete";
-    /*
-    deleteCell.onclick = function () {
-        deleteTask(newRow.TaskID);
-    };
-    */
+    billedCell.setAttribute('class', 'rightA');
+    dueDateCell.innerText = newRow.Due_Date == "0000-00-00" ? "" : newRow.Due_Date;
+    dueDateCell.setAttribute('class', 'date');
+    if (newRow.Paid == 1) {
+        paidCell.innerText = "YES"
+    } else {
+        paidCell.innerText = "NO"
+    }
+
+    deleteCell.innerHTML = `<a href="#" onClick="deleteTask(${newRow.TaskID})">Delete</a>`
 
     // Add the cells to the row 
     row.appendChild(editCell);
     row.appendChild(taskIDCell);
-    row.appendChild(jobSiteIDCell);
+    row.appendChild(jobAddressCell);
     row.appendChild(descriptionCell);
     row.appendChild(seqCell);
     row.appendChild(startCell);
@@ -165,10 +167,11 @@ addRowToTable = (data) => {
     row.appendChild(estimateCell);
     row.appendChild(billedCell);
     row.appendChild(dueDateCell);
-    row.appendChild(paidCell);    
+    row.appendChild(paidCell);
     row.appendChild(deleteCell);
 
     // Add a row attribute so the delete and update row function work and append the row to the table
     row.setAttribute('task-value', newRow.TaskID);
-    currentTable.appendChild(row);
+    currentTableBody.appendChild(row);
+    showTable();
 }

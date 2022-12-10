@@ -3,19 +3,20 @@ body {
     margin: 0 auto;
     padding: 10px;
     margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 h1 {
+    font-size: 48px;
     background-color: #4d4d4d;
     color: whitesmoke;
-    padding: 20px;
+    padding: 5px;
     margin: 0;
     text-align: center;
 }
 
-p {
-    font-size: 22px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+h2 {
+    font-size: 20px;
 }
 
 #navBar {
@@ -38,7 +39,6 @@ td {
     border: 1px solid;
     padding: 5px;
     border-collapse: collapse;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 thead,
@@ -58,6 +58,10 @@ tr:nth-child(even) {
 
 td.rightA {
     text-align: right;
+}
+
+td.alignC {
+    text-align: center;
 }
 
 input.largeCheckbox {
@@ -84,4 +88,25 @@ legend {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: #bf6767;
     font-weight: bold;
+}
+
+table {
+    border: none;
+}
+
+
+input:invalid {
+    border: 2px solid red;
+}
+
+input:invalid:required {
+    background: Powderblue;
+}
+
+input:valid {
+    border: 2px solid black;
+}
+
+.tab4 {
+    margin-right: 4rem;
 }

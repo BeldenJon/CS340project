@@ -13,7 +13,7 @@ function updateContractor(ContractorID) {
             // Get the location of the row where we found the matching JobSiteID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
             // Update HTML in update table
-            document.getElementById("pass-ContractorID").value = ContractorID;
+            document.getElementById("pass-ContractorID").innerHTML = ContractorID;
             document.getElementById("update-License").value = updateRowIndex.getElementsByTagName("td")[2].innerHTML;
             document.getElementById("update-firstName").value = updateRowIndex.getElementsByTagName("td")[3].innerHTML;
             document.getElementById("update-lastName").value = updateRowIndex.getElementsByTagName("td")[4].innerHTML;
@@ -36,7 +36,7 @@ updateContractorForm.addEventListener("submit", function (e) {
 
     // Get form fields we need to get data from
     let formContractorID = document.getElementById("pass-ContractorID");
-    let inputLicense = document.getElementById("update-license");
+    let inputLicense = document.getElementById("update-License");
     let inputFirst = document.getElementById("update-firstName");
     let inputLast = document.getElementById("update-lastName");
     let inputBusiness = document.getElementById("update-businessName");
@@ -44,13 +44,14 @@ updateContractorForm.addEventListener("submit", function (e) {
     let inputEmail = document.getElementById("update-contactEmail");
 
     // Get the values from the form fields
-    let contractorID = formContractorID.value;
+    let contractorID = formContractorID.innerText;
     let lic = inputLicense.value;
     let first = inputFirst.value;
     let last = inputLast.value;
     let business = inputBusiness.value;
     let phone = inputPhone.value;
     let email = inputEmail.value;
+    //console.log(contractorID)
 
     // Put our data we want to send in a javascript object
     let data = {
@@ -83,33 +84,32 @@ updateContractorForm.addEventListener("submit", function (e) {
 })
 
 
-function updateRow(data, ContrtactorID) {
+function updateRow(data, ContractorID) {
     let parsedData = JSON.parse(data);
-    let table = document.getElementById("JobSite-table");
+    let table = document.getElementById("Contractor-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
         //iterate through rows
         //rows would be accessed using the "row" variable assigned in the for loop
-        if (table.rows[i].getAttribute("job-value") == JobSiteID) {
+        if (table.rows[i].getAttribute("contractor-value") == ContractorID) {
 
             // Get the location of the row where we found the matching JobSiteID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
             // Update HTML in table
-            let address = updateRowIndex.getElementsByTagName("td")[2];
-            address.innerHTML = parsedData[0].JobAddress;
-            let zip = updateRowIndex.getElementsByTagName("td")[3];
-            zip.innerHTML = parsedData[0].JobZipcode;
-            let desc = updateRowIndex.getElementsByTagName("td")[4];
-            desc.innerHTML = parsedData[0].JobDescription;
-            let start = updateRowIndex.getElementsByTagName("td")[5];
-            start.innerHTML = parsedData[0].JobStart;
-            let end = updateRowIndex.getElementsByTagName("td")[6];
-            end.innerHTML = parsedData[0].JobCompleted;
-            let cost = updateRowIndex.getElementsByTagName("td")[7];
-            cost.innerHTML = parsedData[0].JobCost;
-            let budget = updateRowIndex.getElementsByTagName("td")[8];
-            budget.innerHTML = parsedData[0].JobBudget;
+            let lic = updateRowIndex.getElementsByTagName("td")[2];
+            lic.innerHTML = parsedData[0].LicenseNumber;
+            let first = updateRowIndex.getElementsByTagName("td")[3];
+            first.innerHTML = parsedData[0].FirstName;
+            let last = updateRowIndex.getElementsByTagName("td")[4];
+            last.innerHTML = parsedData[0].LastName;
+            let business = updateRowIndex.getElementsByTagName("td")[5];
+            business.innerHTML = parsedData[0].BusinessName;
+            let phone = updateRowIndex.getElementsByTagName("td")[6];
+            phone.innerHTML = parsedData[0].ContactPhone;
+            let email = updateRowIndex.getElementsByTagName("td")[7];
+            email.innerHTML = parsedData[0].ContactEmail;
+            showTable();
             break
         }
     }

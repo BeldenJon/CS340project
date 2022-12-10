@@ -32,6 +32,12 @@ addJobSiteForm.addEventListener("submit", function (e) {
     let jobCost = input_jobCost.value;
     let jobBudget = input_jobBudget.value;
 
+    // validate Completion date
+    if (endDate != "" && (endDate < startDate)) {
+        alert("If entered, the 'End Date' must be the the same day or after the 'Start date'.")
+        return
+    }
+
     // Put our data we want to send in a javascript object
     let data = {
         JobAddress: address,
@@ -78,10 +84,7 @@ addJobSiteForm.addEventListener("submit", function (e) {
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("JobSite-table");
-
-    // Get the location where we should insert the new row (end of table)
-    let newRowIndex = currentTable.rows.length;
+    let currentTableBody = document.getElementById("JobSite-table-body");
 
     // Get a reference to the new row from the database query (last object)
     let parsedData = JSON.parse(data);
@@ -101,28 +104,21 @@ addRowToTable = (data) => {
     let deleteCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    editCell = document.createElement('a');
-    editCell.setAttribute('href', "#");
-    editCell.innerHTML = "Edit";
-    /*
-    editCell.onclick = function () {
-        deleteJobSite(newRow.JobSiteID);
-    }
-    */
+    editCell.innerHTML = `<a href="#" onClick="updateJob(${newRow.JobSiteID})">Edit</a>`
     idCell.innerText = newRow.JobSiteID;
     addressCell.innerText = newRow.JobAddress;
     zipcodeCell.innerText = newRow.JobZipcode;
+    zipcodeCell.setAttribute('class', 'rightA');
     descriptionCell.innerText = newRow.JobDescription;
     startDateCell.innerText = newRow.JobStart;
-    endDateCell.innerText = newRow.JobCompleted;
+    startDateCell.setAttribute('class', 'date');
+    endDateCell.innerText = newRow.JobCompleted == "0000-00-00" ? "" : newRow.JobCompleted;
+    endDateCell.setAttribute('class', 'date');
     jobCostCell.innerText = newRow.JobCost;
+    jobCostCell.setAttribute('class', 'rightA');
     jobBudgetCell.innerText = newRow.JobBudget;
-    deleteCell = document.createElement("a");
-    deleteCell.setAttribute('href', "#");
-    deleteCell.innerHTML = "Delete";
-    deleteCell.onclick = function () {
-        deleteJobSite(newRow.JobSiteID);
-    };
+    jobBudgetCell.setAttribute('class', 'rightA');
+    deleteCell.innerHTML = `<a href="#" onClick="deleteJob(${newRow.JobSiteID})">Delete</a>`
 
     // Add the cells to the row 
     row.appendChild(editCell);
@@ -140,5 +136,6 @@ addRowToTable = (data) => {
     row.setAttribute('job-value', newRow.JobSiteID);
 
     // Add the row to the table
-    currentTable.appendChild(row);
+    currentTableBody.appendChild(row);
+    showTable();
 }

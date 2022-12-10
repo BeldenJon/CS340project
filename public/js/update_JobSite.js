@@ -1,6 +1,4 @@
-const months = { Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06', Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12' }
-
-function updateJob(siteID, address, zip, description, start, end, cost, budget) {
+function updateJob(siteID) {
     //set blocks visable on page
     document.getElementById("JobSite-table").style.display = "block";
     document.getElementById("add-JobSite-form-ajax").style.display = "none";
@@ -15,20 +13,14 @@ function updateJob(siteID, address, zip, description, start, end, cost, budget) 
             // Get the location of the row where we found the matching JobSiteID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
             // Update HTML in update table
-            document.getElementById("pass-JobSiteID").value = siteID;
+            document.getElementById("pass-JobSiteID").innerHTML = siteID;
             document.getElementById("update-address").value = updateRowIndex.getElementsByTagName("td")[2].innerHTML;
             document.getElementById("update-zipCode").value = updateRowIndex.getElementsByTagName("td")[3].innerHTML;
             document.getElementById("update-description").value = updateRowIndex.getElementsByTagName("td")[4].innerHTML;
-            //let start = (updateRowIndex.getElementsByTagName("td")[5].innerHTML).split(' ');
-            //let m = String(start[1]);
-            //console.log(months.m);
-            //console.log(start[3] + "-" + m + "-" + start[2]);
-            //let startFormated = Date.prototype.getFullYear(start);
-            //document.getElementById("update-startDate").value = start;
-            //document.getElementById("update-endDate").value = updateRowIndex.getElementsByTagName("td")[6].innerHTML;
+            document.getElementById("update-startDate").value = updateRowIndex.getElementsByTagName("td")[5].innerHTML;
+            document.getElementById("update-endDate").value = updateRowIndex.getElementsByTagName("td")[6].innerHTML;
             document.getElementById("update-jobCost").value = updateRowIndex.getElementsByTagName("td")[7].innerHTML;
             document.getElementById("update-jobBudget").value = updateRowIndex.getElementsByTagName("td")[8].innerHTML;
-            //console.log(startFormated);
             break;
         }
     }
@@ -54,7 +46,7 @@ updateJobSiteForm.addEventListener("submit", function (e) {
     let inputjobBudget = document.getElementById("update-jobBudget");
 
     // Get the values from the form fields
-    let JobsiteID = formJobSiteID.value;
+    let JobsiteID = formJobSiteID.innerText;
     let address = inputAddress.value;
     let zipCode = inputzipCode.value;
     let description = inputDescription.value;
@@ -62,6 +54,12 @@ updateJobSiteForm.addEventListener("submit", function (e) {
     let endDate = inputendDate.value;
     let jobCost = inputjobCost.value;
     let jobBudget = inputjobBudget.value;
+
+    // validate Completion date
+    if (endDate != "" && (endDate < startDate)) {
+        alert("If entered, the 'End Date' must be the the same day or after the 'Start date'.")
+        return
+    }
 
 
     // Put our data we want to send in a javascript object
@@ -118,11 +116,12 @@ function updateRow(data, JobSiteID) {
             let start = updateRowIndex.getElementsByTagName("td")[5];
             start.innerHTML = parsedData[0].JobStart;
             let end = updateRowIndex.getElementsByTagName("td")[6];
-            end.innerHTML = parsedData[0].JobCompleted;
+            end.innerHTML = parsedData[0].JobCompleted == "0000-00-00" ? "" : parsedData[0].JobCompleted;
             let cost = updateRowIndex.getElementsByTagName("td")[7];
             cost.innerHTML = parsedData[0].JobCost;
             let budget = updateRowIndex.getElementsByTagName("td")[8];
             budget.innerHTML = parsedData[0].JobBudget;
+            showTable();
             break
         }
     }

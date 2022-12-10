@@ -1,4 +1,17 @@
-const months = { Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06', Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12' }
+// Global variables for update form fields
+let formTaskID = document.getElementById("pass-TaskID");
+let inputJobSiteID = document.getElementById("update-JobSite");
+let inputDescription = document.getElementById("update-description");
+let inputSeq = document.getElementById("update-sequence");
+let inputstartDate = document.getElementById("update-startDate");
+let inputendDate = document.getElementById("update-endDate");
+let inputContTrade = document.getElementById("update-contTrade");
+let inputPercent = document.getElementById("update-percent");
+let inputEstimate = document.getElementById("update-Estimate");
+let inputBilled = document.getElementById("update-Billed");
+let inputPaymentDate = document.getElementById("update-paymentDate");
+let inputPaid = document.getElementById("update-paid");
+
 
 function updateTask(taskID) {
     //set blocks visable on page
@@ -15,24 +28,18 @@ function updateTask(taskID) {
             // Get the location of the row where we found the matching JobSiteID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
             // Update HTML in update table
-            document.getElementById("pass-TaskID").value = taskID;
-            document.getElementById("update-JobSite").value = updateRowIndex.getElementsByTagName("td")[2].innerHTML;
-            document.getElementById("update-description").value = updateRowIndex.getElementsByTagName("td")[3].innerHTML;
-            document.getElementById("update-sequence").value = updateRowIndex.getElementsByTagName("td")[4].innerHTML;
-            //let start = (updateRowIndex.getElementsByTagName("td")[5].innerHTML).split(' ');
-            //let m = String(start[1]);
-            //console.log(months.m);
-            //console.log(start[3] + "-" + m + "-" + start[2]);
-            //let startFormated = Date.prototype.getFullYear(start);
-            //document.getElementById("update-startDate").value = start;
-            //document.getElementById("update-endDate").value = updateRowIndex.getElementsByTagName("td")[6].innerHTML;
-            document.getElementById("update-contTrade").value = updateRowIndex.getElementsByTagName("td")[7].innerHTML;
-            document.getElementById("update-percent").value = updateRowIndex.getElementsByTagName("td")[9].innerHTML;
-            document.getElementById("update-Estimate").value = updateRowIndex.getElementsByTagName("td")[10].innerHTML;
-            document.getElementById("update-Billed").value = updateRowIndex.getElementsByTagName("td")[11].innerHTML;
-            //document.getElementById("update-paymentDate").value = updateRowIndex.getElementsByTagName("td")[12].innerHTML;
-            //document.getElementById("update-paid").value = updateRowIndex.getElementsByTagName("td")[13];            
-            //console.log(startFormated);
+            formTaskID.innerHTML = taskID;
+            inputJobSiteID.value = updateRowIndex.getElementsByTagName("td")[2].getAttribute("job-ID");
+            inputDescription.value = updateRowIndex.getElementsByTagName("td")[3].innerHTML;
+            inputSeq.value = updateRowIndex.getElementsByTagName("td")[4].innerHTML;
+            inputstartDate.value = updateRowIndex.getElementsByTagName("td")[5].innerHTML;
+            inputendDate.value = updateRowIndex.getElementsByTagName("td")[6].innerHTML;
+            inputContTrade.value = updateRowIndex.getElementsByTagName("td")[7].innerHTML;
+            inputPercent.value = updateRowIndex.getElementsByTagName("td")[9].innerHTML;
+            inputEstimate.value = updateRowIndex.getElementsByTagName("td")[10].innerHTML;
+            inputBilled.value = updateRowIndex.getElementsByTagName("td")[11].innerHTML;
+            inputPaymentDate.value = updateRowIndex.getElementsByTagName("td")[12].innerHTML;
+            inputPaid.checked = updateRowIndex.getElementsByTagName("td")[13].innerText == "YES" ? true : false;
             break;
         }
     }
@@ -47,22 +54,8 @@ updateJobSiteForm.addEventListener("submit", function (e) {
     // Prevent the form from submitting
     e.preventDefault();
 
-    // Get form fields we need to get data from
-    let formTaskID = document.getElementById("pass-TaskID");
-    let inputJobSiteID = document.getElementById("update-JobSite");
-    let inputDescription = document.getElementById("update-description");
-    let inputSeq = document.getElementById("update-sequence");
-    let inputstartDate = document.getElementById("update-startDate");
-    let inputendDate = document.getElementById("update-endDate");
-    let inputContTrade = document.getElementById("update-contTrade");
-    let inputPercent = document.getElementById("update-percent");
-    let inputEstimate = document.getElementById("update-Estimate");
-    let inputBilled = document.getElementById("update-Billed");
-    let inputPaymentDate = document.getElementById("update-paymentDate");
-    let inputPaid = document.getElementById("update-paid");
-
     // Get the values from the form fields
-    let TaskID = formTaskID.value;
+    let TaskID = formTaskID.innerText;
     let jobID = inputJobSiteID.value;
     let description = inputDescription.value;
     let seq = inputSeq.value;
@@ -73,7 +66,15 @@ updateJobSiteForm.addEventListener("submit", function (e) {
     let estimate = inputEstimate.value;
     let billed = inputBilled.value;
     let paymentDate = inputPaymentDate.value;
-    let paid = inputPaid.value;
+    let paid = inputPaid.checked == true ? 1 : 0;
+
+    // Validate inputs
+    console.log(startDate + " - " + endDate);
+    if (startDate > endDate) {
+        alert("The 'End Date' must be the the same day or after the 'Start date'.")
+        return
+    }
+
 
     // Put our data we want to send in a javascript object
     let data = {
@@ -124,8 +125,9 @@ function updateRow(data, TaskID) {
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
             // Update HTML in table
-            let jobID = updateRowIndex.getElementsByTagName("td")[2];
-            jobID.innerHTML = parsedData[0].JobSiteID;
+            let jobAddress = updateRowIndex.getElementsByTagName("td")[2];
+            jobAddress.innerHTML = parsedData[0].JobAddress;
+            jobAddress.setAttribute("job-ID", parsedData[0].JobSiteID);
             let desc = updateRowIndex.getElementsByTagName("td")[3];
             desc.innerHTML = parsedData[0].Description;
             let sequence = updateRowIndex.getElementsByTagName("td")[4];
@@ -145,10 +147,12 @@ function updateRow(data, TaskID) {
             let costB = updateRowIndex.getElementsByTagName("td")[11];
             costB.innerHTML = parsedData[0].CostBilled;
             let payDate = updateRowIndex.getElementsByTagName("td")[12];
-            payDate.innerHTML = parsedData[0].Due_Date;
+            payDate.innerHTML = parsedData[0].Due_Date == "0000-00-00" ? "" : parsedData[0].Due_Date;
             let paid = updateRowIndex.getElementsByTagName("td")[13];
-            paid.innerHTML = parsedData[0].Paid;
+            paid.innerHTML = parsedData[0].Paid == 1 ? "YES" : "NO";
+            showTable();
             break
         }
     }
 }
+

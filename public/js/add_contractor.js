@@ -74,10 +74,11 @@ addJobSiteForm.addEventListener("submit", function (e) {
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("Contractor-table");
+    //let currentTable = document.getElementById("Contractor-table");
+    let currentTableBody = document.getElementById("Contractor-table-body");
 
     // Get the location where we should insert the new row (end of table)
-    let newRowIndex = currentTable.rows.length;
+    //let newRowIndex = currentTable.rows.length;
 
     // Get a reference to the new row from the database query (last object)
     let parsedData = JSON.parse(data);
@@ -96,25 +97,16 @@ addRowToTable = (data) => {
     let deleteCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    editCell = document.createElement('a');
-    editCell.setAttribute('href', "#");
-    editCell.innerHTML = "Edit";
-    editCell.onclick = function () {
-        updateContractor(newRow.ContractorID);
-    }
+    editCell.innerHTML = `<a href="#" onClick="updateContractor(${newRow.ContractorID})">Edit</a>`
     idCell.innerText = newRow.ContractorID;
     licenseCell.innerText = newRow.LicenseNumber;
+    licenseCell.setAttribute('class', 'rightA');
     firstCell.innerText = newRow.FirstName;
     lastCell.innerText = newRow.LastName;
     businessCell.innerText = newRow.BusinessName;
     phoneCell.innerText = newRow.ContactPhone;
     emailCell.innerText = newRow.ContactEmail;
-    deleteCell = document.createElement("a");
-    deleteCell.setAttribute('href', "#");
-    deleteCell.innerHTML = "Delete";
-    deleteCell.onclick = function () {
-        deleteContractorAjax(newRow.ContractorID);
-    };
+    deleteCell.innerHTML = `<a href="#" onClick="deleteContractor(${newRow.ContractorID})">Delete</a>`
 
     // Add the cells to the row 
     row.appendChild(editCell);
@@ -131,5 +123,6 @@ addRowToTable = (data) => {
     row.setAttribute('contractor-value', newRow.ContractorID);
 
     // Add the row to the table
-    currentTable.appendChild(row);
+    currentTableBody.appendChild(row);
+    showTable();
 }

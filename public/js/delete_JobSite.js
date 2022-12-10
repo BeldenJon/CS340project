@@ -1,12 +1,15 @@
-function deleteJob() {
+function deleteJob(JobID) {
     document.getElementById("JobSite-table").style.display = "block";
     document.getElementById("add-JobSite-form-ajax").style.display = "none";
     document.getElementById("update-JobSite-form-ajax").style.display = "none";
     document.getElementById("delete-JobSite-ajax").style.display = "block";
+
+    document.getElementById("pass-JobID").innerHTML = JobID;
 }
 
 //code for deleteJobSite function using jQuery
-function deleteJobSite(JobID) {
+function deleteJobSite() {
+    let JobID = document.getElementById("pass-JobID").innerHTML;
     let link = '/delete-JobSite-ajax/';
     let data = {
         JobSiteID: JobID
@@ -24,7 +27,6 @@ function deleteJobSite(JobID) {
 
 function deleteRow(jobID) {
     let table = document.getElementById("JobSite-table");
-    //console.log(jobID);
     for (let i = 0, row; row = table.rows[i]; i++) {
         //iterate through rows
         //rows would be accessed using the "row" variable assigned in the for loop
@@ -33,5 +35,5 @@ function deleteRow(jobID) {
             break;
         }
     }
-    //showTable();
+    showTable();
 }

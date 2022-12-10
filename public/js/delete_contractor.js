@@ -1,12 +1,15 @@
-function deleteContractor() {
+function deleteContractor(ContractorID) {
     document.getElementById("Contractor-table").style.display = "block";
     document.getElementById("add-Contractor-form-ajax").style.display = "none";
     document.getElementById("update-Contractor-form-ajax").style.display = "none";
     document.getElementById("delete-Contractor-ajax").style.display = "block";
+
+    document.getElementById("pass-ContractorID-delete").innerHTML = ContractorID;
 }
 
 //code for deleteContractor function using jQuery
-function deleteContractorAjax(ContractorID) {
+function deleteContractorAjax() {
+    let ContractorID = document.getElementById("pass-ContractorID-delete").innerHTML;
     let link = '/delete-Contractor-ajax/';
     let data = {
         ContractorID: ContractorID

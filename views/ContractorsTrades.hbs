@@ -1,0 +1,125 @@
+{{!-- Just some plain text --}}
+    <h1> Area 57 Construction</h1>
+    <div id="navBar">
+        <a href="./">Home</a> |
+        <a href="./JobSites">Jobs</a> |
+        <a href="./Tasks">Tasks</a> |
+        <a href="./Contractors">Contractors</a> |
+        <a href="./Trades">Trade</a> |
+        <a href="./ContractorsTrades">Contractors Trades</a>
+    </div>
+    <h2>ContractorsTrades: Intersection table for Contractors and Trades relationship that serves dual
+        purpose of linking both with Tasks entity. This table also serves as an area to keep notes on contractors past
+        performance</h2>
+
+
+{{!--jquery for delete operation--}}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- The Data from our Database --}}
+<form id="search-for-trade" method='GET' action='./ContractorsTrades'>
+    <label for="input-trade"> Search for a contractor that has the "trade" you need (ex: Dirtwork).</label>
+        <input type="text" name='trade' id="input-trade-search" placeholder="Seach by tradename...">
+        <button type="submit">Submit</button>
+        <a href='./ContractorsTrades'><button>Reset</button></a>
+</form>
+
+{{!-- Create a table --}}
+<table id="ContractorTrade-table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Business Name</th>
+            <th>Trade Name</th>
+            <th>Contractor Trade Notes</th>
+            <th>Active Trade</th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody id="ContractorTrade-table-body">
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each data}}
+        <tr contractorTrade-value={{this.ContractorTradeID}}>
+            <td><a href="#" onClick="updateContractorTrade({{this.ContractorTradeID}})">Edit</a></td>
+            <td class="rightA">{{this.ContractorTradeID}}
+            <td contr={{this.ContractorID}}>{{this.BusinessName}}</td>
+            <td trade={{this.TradeID}}>{{this.TradeName}}</td>
+            <td>{{this.ContractorTradesNotes}}</td>
+            <td class="alignC">{{this.ActiveTrade}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<br>
+<button onClick="showAddNew()">Add New</button><br><br>
+
+{{!-- Form to add a record to the table using AJAX --}}
+<form id="add-ContractorTrade-form-ajax">
+    <legend> Add New Contractor Trade </legend>
+    <fieldset class="fields">
+        <label for="input-Contractor">Contractor: (required)</label>
+        <select name="input-Contractor" id="input-Contractor">
+            <option value="">Select a Contractor:</option>
+            {{#each Contractor}}
+                <option value="{{this.ContractorID}}" required>{{this.BusinessName}}</option>
+            {{/each}}
+        </select>
+        <span class="tab4"></span>
+        
+        <label for="input-Trade">Trade: (required)</label>
+        <select name="input-Trade" id="input-Trade">
+            <option value="">Select a Trade:</option>
+            {{#each Trade}}
+                <option value="{{this.TradeID}}" required>{{this.TradeName}}</option>
+            {{/each}}
+        </select>
+        <span class="tab4"></span>
+
+        <label for="input-activeTrade">is Active Trade: </label>
+        <input type="checkbox" name="input-activeTrade" id="input-activeTrade" class="largeCheckbox"><br>     
+
+        <label for="input-notes">Notes: </label><br>
+        <textarea type="text" name="input-notes" id="input-notes" cols="150" rows="7" value=""></textarea>
+
+    </fieldset>
+    <button class=btn type="submit" id="addContactorTrade">Add New</button>
+    <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+</form>
+
+{{!-- Form to update a record to the table using AJAX --}}
+<form id="update-ContractorTrade-form-ajax">
+    <legend> Update ContractorTrade </legend>
+    <fieldset>
+        <label for="pass-ContractorTradeID">ContractorTradeID: <b id="pass-ContractorTradeID"></b> <span class="tab4"></span></label>
+        <label for="pass-Contractor"> Contractor Name: <b id="pass-ContractorID" value=""></b><span class="tab4"></span></label>
+        <label for="pass-Trade"> Trade Name: <b id="pass-TradeID" value=""></b><span class="tab4"></span></label>
+
+        <label for="update-activeTrade">is Active Trade: </label>
+        <input type="checkbox" name="update-activeTrade" id="update-activeTrade" class="largeCheckbox"><br><br>
+
+        <label for="update-notes">Notes: </label><br>
+        <textarea type="text" name="update-notes" id="update-notes" cols="150" rows="7" value=""></textarea>
+
+    </fieldset>
+    <button class=btn type="submit" id="updateContractorTrade">Update</button>
+    <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+</form>
+
+{{!--Set views--}}
+    <script>
+        function showTable() {
+            document.getElementById("ContractorTrade-table").style.display = "block";
+            document.getElementById("add-ContractorTrade-form-ajax").style.display = "none";
+            document.getElementById("update-ContractorTrade-form-ajax").style.display = "none";
+        }
+        //default show table on load
+        showTable()
+    </script>
+
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_contractorTrade.js"></script>
+<script src="./js/update_contractorTrade.js"></script>

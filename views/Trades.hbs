@@ -1,0 +1,111 @@
+{{!-- Just some plain text --}}
+    <h1> Area 57 Construction</h1>
+    <div id="navBar">
+        <a href="./">Home</a> |
+        <a href="./JobSites">Jobs</a> |
+        <a href="./Tasks">Tasks</a> |
+        <a href="./Contractors">Contractors</a> |
+        <a href="./Trades">Trade</a> |
+        <a href="./ContractorsTrades">Contractors Trades</a>
+    </div>
+    <h2>Trades: entity records details of trades that are part of residential construction.</h2>
+
+{{!--jquery for delete operation--}}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+{{!-- The Data from our Database --}}
+
+{{!-- Create a table --}}
+<table id="Trades-table">
+    <thead>
+        <tr>
+            <th></th>
+            {{#each data.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+            <th></th>
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody id="Trades-table-body">
+        {{!-- For each row, print the id, trade name, trade description in order --}}
+        {{#each data}}
+        <tr trade-value={{this.TradeID}}>
+            <td><a href="#" onClick="updateTrade({{this.TradeID}})">Edit</a></td>
+            <td>{{this.TradeID}}
+            <td class="rightA">{{this.TradeName}}</td>
+            <td>{{this.TradeDescription}}</td>
+            <td><a href="#" onClick="deleteTrade({{this.TradeID}})">Delete</a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<br>
+<button onClick="showAddNew()">Add New</button><br><br>
+
+
+{{!-- Form to add a record to the table using AJAX --}}
+<form id="add-Trade-form-ajax">
+    <legend> Add New Trade </legend>
+    <fieldset class="fields">
+        <label for="input-Trade">Trade Name </label>
+        <input type="text" name="input-Trade" id="input-Trade" minlength="5" required>
+
+        <label for="input-tradeDescription">Trade Description: </label>
+        <input type="text" name="input-tradeDescription" id="input-tradeDescription" size="100" minlength="5" required>
+
+    </fieldset>
+    <button class=btn type="submit" id="addTrade">Add New</button>
+    <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+</form>
+
+{{!-- Form to update a record to the table using AJAX --}}
+<form id="update-Trade-form-ajax">
+    <legend> Update Trade </legend>
+    <fieldset>
+        <label for="pass-TradeID-update">ContractorID: <b id="pass-TradeID-update"></b></label><br>
+
+        <label for="update-Trade">Trade Name </label>
+        <input type="text" name="update-Trade" id="update-Trade" minlength="5"required>
+
+        <label for="update-tradeDescription">Trade Description: </label>
+        <input type="text" name="update-tradeDescription" id="update-tradeDescription" size="100" minlength="5" required>
+
+    </fieldset>
+    <button class=btn type="submit" id="updateTrade">Update</button>
+    <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+</form>
+
+
+{{!-- Form to delete a record to the table using AJAX --}}
+<form method="DELETE" id="delete-Trade-ajax">
+    <legend>Delete Contractor</legend>
+    <fieldset>
+        <label>Are you sure you want to delete TradeID <b id="pass-TradeID-delete"></b>?</label>
+    </fieldset>
+    <button class=btn type="delete" id="deleteTrade" onClick="deleteTradeAjax()">Delete</button>
+    <button class=btn type="button" value="cancel" onClick="showTable()">Cancel</button>
+</form>
+
+
+{{!--Set views--}}
+    <script>
+        function showTable() {
+            document.getElementById("Trades-table").style.display = "block";
+            document.getElementById("add-Trade-form-ajax").style.display = "none";
+            document.getElementById("update-Trade-form-ajax").style.display = "none";
+            document.getElementById("delete-Trade-ajax").style.display = "none";
+        }
+        //default show table on load
+        showTable()
+    </script>
+
+
+{{!-- Embed our javascript to handle the DOM manipulation and AJAX request --}}
+<script src="./js/add_trade.js"></script>
+<script src="./js/update_trade.js"></script>
+<script src="./js/delete_trade.js"></script>
