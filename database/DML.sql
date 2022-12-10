@@ -60,7 +60,7 @@ SELECT TaskID, Tasks.JobSiteID, JobSites.JobAddress, TaskDescription as 'Descrip
         LEFT JOIN Trades on ContractorsTrades.TradeID = Trades.TradeID
         LEFT JOIN JobSites ON JobSites.JobSiteID = Tasks.JobSiteID
         WHERE JobSites.JobAddress LIKE %:search%
-        ORDER BY JobsiteID, TaskSeq;`;
+        ORDER BY JobsiteID, TaskSeq;
 		
 		
 -- Operations for Contractors Page
